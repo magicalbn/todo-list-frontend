@@ -1,7 +1,7 @@
 import axios from "../config/todoAxios.config";
 
-export const getTodoList = async () => {
-    const { data } = await axios.get("/list?page=1&limit=10");
+export const getTodoList = async (page, limit) => {
+    const { data } = await axios.get(`/list?page=${page}&limit=${limit}`);
     return data;
 };
 
