@@ -4,21 +4,21 @@ import TodoList from "../TodoList/TodoList";
 
 import { getTodoList } from "../../lib/todo-lib";
 import Pagination from "../Pagintaion/Pagination";
+import TodoForm from "../TodoForm/TodoForm";
 
 const Home = () => {
-    const [todoTitle, setTodoTitle] = useState("");
-    const [todoDescription, setTodoDescription] = useState("");
-
     const [todoList, setTodoList] = useState([]);
-
     const [totalItems, setTotalItems] = useState(1);
 
-    useEffect(() => {
-        // fetchList(1, 10);
-    }, []);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const fetchList = (page, limit) => {
-        getTodoList(page, limit)
+    useEffect(() => {
+        fetchList();
+    }, [currentPage, rowsPerPage]);
+
+    const fetchList = () => {
+        getTodoList(currentPage, rowsPerPage)
             .then((res) => {
                 setTodoList(res.data);
                 setTotalItems(res.pagination?.total);
@@ -26,38 +26,44 @@ const Home = () => {
             .catch((e) => console.log(e));
     };
 
-    const onChangeHandler = (e, value) => {
-        if (value == "title") {
-            setTodoTitle(e.target.value);
-        } else if (value == "description") {
-            setTodoDescription(e.target.value);
+    const resetandRefecth = () => {
+        if (currentPage === 1) {
+            fetchList();
+        } else setCurrentPage(1);
+    };
+
+    const changePageHandler = (next) => {
+        const totalPages = Math.ceil(totalItems / rowsPerPage);
+        if (next) {
+            if (currentPage >= totalPages) {
+                return;
+            }
+            setCurrentPage(currentPage + 1);
+        } else {
+            if (currentPage === 1) {
+                return;
+            }
+
+            setCurrentPage(currentPage - 1);
         }
+    };
+
+    const changeRowsPerPage = (e) => {
+        setRowsPerPage(e.target.value);
+        setCurrentPage(1);
     };
 
     return (
         <Layout>
             <div className="flex items-center p-4 gap-2 flex-col">
-                <form className="flex gap-2 items-center my-4 flex-col md:flex-row">
-                    <input
-                        className="border outline-none border-gray-400 rounded-md p-1 px-4"
-                        value={todoTitle}
-                        onChange={(e) => onChangeHandler(e, "title")}
-                        placeholder="Title"
-                    />
-                    <input
-                        className="border outline-none border-gray-400 rounded-md p-1 px-4"
-                        value={todoDescription}
-                        onChange={(e) => onChangeHandler(e, "description")}
-                        placeholder="Description"
-                    />
-                    <button
-                        type="submit"
-                        className="p-1.5 bg-[#c4f2e3] text-[#487565] rounded-md px-4"
-                    >
-                        Add
-                    </button>
-                </form>
-                <Pagination totalItems={totalItems} fetchList={fetchList} />
+                <TodoForm resetandRefecth={resetandRefecth} />
+                <Pagination
+                    totalPages={Math.ceil(totalItems / rowsPerPage)}
+                    currentPage={currentPage}
+                    rowsPerPage={rowsPerPage}
+                    changeRowsPerPage={changeRowsPerPage}
+                    changePageHandler={changePageHandler}
+                />
                 <TodoList todoList={todoList} fetchList={fetchList} />
             </div>
         </Layout>

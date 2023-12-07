@@ -5,6 +5,11 @@ export const getTodoList = async (page, limit) => {
     return data;
 };
 
+export const createTodo = async (body) => {
+    const { data } = await axios.post(`/create`, body);
+    return data;
+};
+
 export const deleteTodo = async (todoID) => {
     const { data } = await axios.delete(`/delete/${todoID}`);
     return data;

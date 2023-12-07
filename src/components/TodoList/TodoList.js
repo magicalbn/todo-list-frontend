@@ -13,7 +13,11 @@ const TodoList = ({ todoList, fetchList }) => {
             </div>
             {todoList.map((eachTodo) => {
                 return (
-                    <TodoCard fetchList={fetchList} todoDetails={eachTodo} />
+                    <TodoCard
+                        key={eachTodo._id}
+                        fetchList={fetchList}
+                        todoDetails={eachTodo}
+                    />
                 );
             })}
         </div>

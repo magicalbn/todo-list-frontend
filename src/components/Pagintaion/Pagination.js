@@ -1,33 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const Pagination = ({ totalItems, fetchList }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
-
-    useEffect(() => {
-        fetchList(currentPage, rowsPerPage);
-    }, [currentPage, rowsPerPage]);
-
-    const changePageHandler = (next) => {
-        const totalPages = Math.ceil(totalItems / rowsPerPage);
-        if (next) {
-            if (currentPage >= totalPages) {
-                return;
-            }
-            setCurrentPage(currentPage + 1);
-        } else {
-            if (currentPage === 1) {
-                return;
-            }
-
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    const changeRowsPerPage = (e) => {
-        setRowsPerPage(e.target.value);
-        setCurrentPage(1);
-    };
+const Pagination = ({
+    totalPages,
+    currentPage,
+    rowsPerPage,
+    changeRowsPerPage,
+    changePageHandler,
+}) => {
     return (
         <div className="w-full mt-5 max-w-3xl  flex gap-2 justify-end items-center">
             <div className="flex gap-2 mr-4">
@@ -48,7 +27,7 @@ const Pagination = ({ totalItems, fetchList }) => {
             </div>
             <div className="flex gap-2 items-center">
                 <p className="font-semibold text-sm text-[#4D4D4D]">
-                    Page: {currentPage} of {Math.ceil(totalItems / rowsPerPage)}
+                    Page: {currentPage} of {totalPages}
                 </p>
                 <button
                     onClick={() => {

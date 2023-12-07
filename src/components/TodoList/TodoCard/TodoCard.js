@@ -10,7 +10,6 @@ const TodoCard = ({ todoDetails, fetchList }) => {
         );
         if (confirm) {
             deleteTodo(_id).then((res) => {
-                alert(`Item ${title} deleted`);
                 fetchList();
             });
         }
