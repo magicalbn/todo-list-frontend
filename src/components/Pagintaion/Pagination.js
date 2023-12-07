@@ -8,7 +8,7 @@ const Pagination = ({
     changePageHandler,
 }) => {
     return (
-        <div className="w-full mt-5 max-w-3xl  flex gap-2 justify-end items-center">
+        <div className="w-full mt-5 max-w-3xl  flex gap-2 justify-end items-center px-4">
             <div className="flex gap-2 mr-4">
                 <p className="font-semibold text-sm text-[#4D4D4D]">
                     Rows per page:
