@@ -9,9 +9,13 @@ const TodoCard = ({ todoDetails, fetchList }) => {
             "Do you want to mark this item as done?"
         );
         if (confirm) {
-            deleteTodo(_id).then((res) => {
-                fetchList();
-            });
+            deleteTodo(_id)
+                .then((res) => {
+                    fetchList();
+                })
+                .catch((e) => {
+                    alert("something went wrong");
+                });
         }
     };
 
