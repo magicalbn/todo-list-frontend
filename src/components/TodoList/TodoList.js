@@ -6,7 +6,9 @@ const TodoList = ({ todoList, fetchList }) => {
         <div className="w-full my-5 max-w-3xl rounded-md overflow-hidden px-4">
             <div className="grid grid-cols-2 md:grid-cols-3 bg-[#F2F2F2] w-full p-3">
                 <p className="font-medium text-[14px] text-[#4D4D4D]">Title</p>
-                <p className="hidden md:block">Description</p>
+                <p className="hidden md:block font-medium text-[14px] text-[#4D4D4D]">
+                    Description
+                </p>
                 <p className="font-medium text-[14px] text-[#4D4D4D] text-right">
                     Mark Complete
                 </p>
